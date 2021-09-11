@@ -43,7 +43,7 @@ I am not responsible for any coins lost due to the misuse of this script, nor du
 
 2. Connect your Geiger counter to the computer as a microphone, using a male to male aux cable. Make sure that the Geiger counter input is selected as your default microphone in your computer settings, and that the counts are being detected.
 
-3. If you are using a different Geiger counter, you will probably need to change the response time of your tube. Open `GeigerBIP39Generator.py` with your favourite editor and locate the funcion `get_ticks`:
+3. If you are using a different Geiger counter than mine, you will probably need to change the response time of your tube. Open `GeigerBIP39Generator.py` with your favourite editor and locate the funcion `get_ticks`:
     ```python3
     def get_ticks(wav_file):                    # This function reads the .wav file with the Geiger-Muller counter data and returns the times of the counts
 
