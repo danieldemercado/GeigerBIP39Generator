@@ -34,6 +34,7 @@ I am not responsible for any coins losts due to the misuse of this script, nor d
 * Finally, you will need a Geiger counter that can be connected to your computer as a microphone (i.e. that has an aux connection). I use a GQ GMC-300E Plus, but other GQ models or brands should work (although you might need to change the response time of your tube, more about this below).
 
 ## How to use it <a name="how-to-use-it" />
+
 1. Clone this repository to your computer: `git clone https://github.com/danieldemercado/GeigerBIP39Generator`  
   Navigate to the cloned repository: `cd GeigerBIP39Generator`
 
@@ -74,3 +75,5 @@ I am not responsible for any coins losts due to the misuse of this script, nor d
 5. The script will ask you to choose a mnemonic code words length. Choose the one you like.
 
 6. Wait untill the generation process finishes, this might take up to 20 minutes if you are only using background radiation. When this is done, the BIP39 words should be printed to the terminal.
+
+You can check how it works in [this video](https://www.youtube.com/watch?v=SxQ-3eGIXt8).
