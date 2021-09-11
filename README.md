@@ -30,32 +30,42 @@ A python 3 script for generating BIP39 mnemonic codes with random data coming fr
 * Finally, you will need a Geiger counter that can be connected to your computer as a microphone (i.e. that has an aux connection). I use a GQ GMC-300E Plus, but other GQ models or brands should work (although you might need to change the response time of your tube, more about this below).
 
 ## How to use it <a name="how-to-use-it" />
+1. Clone this repository to your computer: `git clone https://github.com/danieldemercado/GeigerBIP39Generator`  
+  Navigate to the cloned repository: `cd GeigerBIP39Generator`
 
-1. Connect your Geiger counter to the computer as a microphone, using a male to male aux cable. Check that the Geiger counter input is selected as your default microphone in your computer settings.
+2. Connect your Geiger counter to the computer as a microphone, using a male to male aux cable. Make sure that the Geiger counter input is selected as your default microphone in your computer settings, and that the counts are being detected.
 
-2. If you are using a different Geiger counter, you will probably need to change the response time of your tube. Open `GeigerBIP39Generator.py` with your favourite editor and locate the funcion `get_ticks`:
-```python3
-def get_ticks(wav_file):                    # This function reads the .wav file with the Geiger-Muller counter data and returns the times of the counts
+3. If you are using a different Geiger counter, you will probably need to change the response time of your tube. Open `GeigerBIP39Generator.py` with your favourite editor and locate the funcion `get_ticks`:
+    ```python3
+    def get_ticks(wav_file):                    # This function reads the .wav file with the Geiger-Muller counter data and returns the times of the counts
 
-    a = read(wav_file)                      # Read the .wav file
+        a = read(wav_file)                      # Read the .wav file
 
-    volume = np.array(np.abs(a[1]),dtype=float)         # Volume of the data
-    time = np.arange(len(a[1]))/a[0]                    # Time for each data point
+        volume = np.array(np.abs(a[1]),dtype=float)         # Volume of the data
+        time = np.arange(len(a[1]))/a[0]                    # Time for each data point
 
-    skip_time = 0.000270                                # The time (in seconds) that the Geiger tube needs to return to normal (For GMC-300E plus ~ 270 μs) 
-    skip_points = int(skip_time * a[0])                 
+        skip_time = 0.000270                                # The time (in seconds) that the Geiger tube needs to return to normal plus a little more (For GMC-300E plus ~ 270 μs) 
+        skip_points = int(skip_time * a[0])                 
 
-    ticks = []                                          # Empty list to save the tick's time
+        ticks = []                                          # Empty list to save the tick's time
 
-    n = 0                                               # While loop for processing the .wav
-    while n < len(volume):
-        
-        if volume[n] > 0.25:                         # If a tick is detected
-            ticks.append(time[n])                        # Save its time
+        n = 0                                               # While loop for processing the .wav
+        while n < len(volume):
 
-            n += skip_points                             # Skip the data until de tube returns to normal
-            
-        n += 3               # Resolution of the data analysis. This must be a time smaller than the skip time (i.e.: n/a[0] << skip_time)
+            if volume[n] > 0.25:                         # If a tick is detected
+                ticks.append(time[n])                        # Save its time
 
-    return ticks
-```
+                n += skip_points                             # Skip the data until de tube returns to normal
+
+            n += 3               # Resolution of the data analysis. This must be a time smaller than the skip time (i.e.: n/a[0] << skip_time)
+
+        return ticks
+    ```
+    Change `skip_time = 0.000270` (in seconds) to the response time of your tube plus a little more (for the GQ GMC-300E Plus, the response time is ~240 μs, so 270 μs works fine). You must find the response time of your tube manually, by recording some data and analizing the time width of the counts.
+    
+    If the response time of your tube is much smaller (bigger) than 270 μs, you will probably also need to increase (reduce) the data analysis resolution by reducing (increasing) the integer number in `n += 3`.
+    
+4. Run the script with the command: `python3 GeigerBIP39Generator.py`
+
+5. The script will ask you to choose a mnemonic code words length. Choose the one you like.
+
