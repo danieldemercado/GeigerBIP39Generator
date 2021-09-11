@@ -35,8 +35,11 @@ I am not responsible for any coins lost due to the misuse of this script, nor du
 
 ## How to use it <a name="how-to-use-it" />
 
-1. Clone this repository to your computer: `git clone https://github.com/danieldemercado/GeigerBIP39Generator`  
-  Navigate to the cloned repository: `cd GeigerBIP39Generator`
+1. Clone this repository to your computer:  
+  `git clone https://github.com/danieldemercado/GeigerBIP39Generator`
+  
+   Navigate to the cloned repository:  
+   `cd GeigerBIP39Generator`
 
 2. Connect your Geiger counter to the computer as a microphone, using a male to male aux cable. Make sure that the Geiger counter input is selected as your default microphone in your computer settings, and that the counts are being detected.
 
