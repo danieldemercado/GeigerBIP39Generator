@@ -47,10 +47,15 @@ I am not responsible for any coins lost due to the misuse of this script, nor du
     ```python3
     def get_ticks(wav_file):                    # This function reads the .wav file with the Geiger-Muller counter data and returns the times of the counts
 
+        global max_volume
+
         a = read(wav_file)                      # Read the .wav file
 
-        volume = np.array(np.abs(a[1]),dtype=float)         # Volume of the data
+        volume = np.array(np.abs(a[1]),dtype=float)         # Sound volume of the data
         time = np.arange(len(a[1]))/a[0]                    # Time for each data point
+
+        if max_volume == None:                              # Gets the max volume in the data. Different computers might register different max volumes.
+            max_volume = np.amax(volume)
 
         skip_time = 0.000270                                # The time (in seconds) that the Geiger tube needs to return to normal plus a little more (For GMC-300E plus ~ 270 μs) 
         skip_points = int(skip_time * a[0])                 
@@ -60,15 +65,16 @@ I am not responsible for any coins lost due to the misuse of this script, nor du
         n = 0                                               # While loop for processing the .wav
         while n < len(volume):
 
-            if volume[n] > 0.25:                         # If a tick is detected
-                ticks.append(time[n])                        # Save its time
+            if volume[n] > 0.25*max_volume:                               # If a tick is detected
+                ticks.append(time[n])                              # Save its time
 
-                n += skip_points                             # Skip the data until de tube returns to normal
+                n += skip_points                                   # Skip the data until de tube returns to normal
 
-            n += 3               # Resolution of the data analysis. This must be a time smaller than the skip time (i.e.: n/a[0] << skip_time)
+            n += 3                                          # Resolution of the data analysis. This must be a time smaller than the skip time (i.e.: n/a[0] << skip_time)
 
         return ticks
     ```
+
     Change `skip_time = 0.000270` (in seconds) to the response time of your tube plus a little more (for the GQ GMC-300E Plus, the response time is ~240 μs, so 270 μs works fine). You must find the response time of your tube manually, by recording some data and analizing the time width of the counts.
     
     If the response time of your tube is much smaller (bigger) than 270 μs, you will probably also need to increase (reduce) the data analysis resolution by reducing (increasing) the integer number in `n += 3`.
