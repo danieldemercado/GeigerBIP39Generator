@@ -76,4 +76,4 @@ I am not responsible for any coins losts due to the misuse of this script, nor d
 
 6. Wait untill the generation process finishes, this might take up to 20 minutes if you are only using background radiation. When this is done, the BIP39 words should be printed to the terminal.
 
-You can check how it works in [this video](https://www.youtube.com/watch?v=SxQ-3eGIXt8).
+You can check how it works in [this video](https://www.youtube.com/watch?v=Qx44_psG9KI).
