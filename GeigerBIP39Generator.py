@@ -5,7 +5,9 @@ import sounddevice as sd
 import hashlib
 import os
  
-def get_ticks(max_volume,wav_file):                    # This function reads the .wav file with the Geiger-Muller counter data and returns the times of the counts
+def get_ticks(wav_file):                    # This function reads the .wav file with the Geiger-Muller counter data and returns the times of the counts
+    
+    global max_volume
 
     a = read(wav_file)                      # Read the .wav file
 
@@ -127,14 +129,16 @@ del valid_mnenomic_lenght_option, mnenomic_lenght_option
 print('Generating (at least) ' + str(bits_objective) + ' random bits from your Geiger counter data:')
 
 random_bits = ''
-max_volume = None                           
+max_volume = None       # This will be the max sound volume in the recorded data        
 while len(random_bits) < bits_objective:    # This generates (from the Geiger counter data) the random bits necesary for the mnenomic
     record_name = 'data'
     record_data(60,record_name)
 
-    random_bits = random_bits + get_random_bits(get_ticks(max_volume,"data.wav"))
+    random_bits = random_bits + get_random_bits(get_ticks("data.wav"))
     print(datetime.now().strftime("%H:%M:%S") + ' - ' + str(len(random_bits)) + ' random bits generated...')
     os.remove(record_name + '.wav')
+
+    print(max_volume)
 
 
 print('\n --- Extracting your mnenomic code from the random data --- ') # See "Chapter 5 - Wallets" from the book Mastering Bitcoin (Andreas M. Antonopoulos) 
