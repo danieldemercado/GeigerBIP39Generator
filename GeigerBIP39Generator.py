@@ -138,8 +138,6 @@ while len(random_bits) < bits_objective:    # This generates (from the Geiger co
     print(datetime.now().strftime("%H:%M:%S") + ' - ' + str(len(random_bits)) + ' random bits generated...')
     os.remove(record_name + '.wav')
 
-    print(max_volume)
-
 
 print('\n --- Extracting your mnenomic code from the random data --- ') # See "Chapter 5 - Wallets" from the book Mastering Bitcoin (Andreas M. Antonopoulos) 
 
