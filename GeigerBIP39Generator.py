@@ -5,12 +5,15 @@ import sounddevice as sd
 import hashlib
 import os
  
-def get_ticks(wav_file):                    # This function reads the .wav file with the Geiger-Muller counter data and returns the times of the counts
+def get_ticks(max_volume,wav_file):                    # This function reads the .wav file with the Geiger-Muller counter data and returns the times of the counts
 
     a = read(wav_file)                      # Read the .wav file
 
-    volume = np.array(np.abs(a[1]),dtype=float)         # Volume of the data
+    volume = np.array(np.abs(a[1]),dtype=float)         # Sound volume of the data
     time = np.arange(len(a[1]))/a[0]                    # Time for each data point
+
+    if max_volume == None:                              # Gets the max volume in the data. Different computers might register different max volumes.
+        max_volume = np.amax(volume)
 
     skip_time = 0.000270                                # The time (in seconds) that the Geiger tube needs to return to normal plus a little more (For GMC-300E plus ~ 270 μs) 
     skip_points = int(skip_time * a[0])                 
@@ -20,7 +23,7 @@ def get_ticks(wav_file):                    # This function reads the .wav file 
     n = 0                                               # While loop for processing the .wav
     while n < len(volume):
         
-        if volume[n] > 0.25:                               # If a tick is detected
+        if volume[n] > 0.25*max_volume:                               # If a tick is detected
             ticks.append(time[n])                              # Save its time
 
             n += skip_points                                   # Skip the data until de tube returns to normal
@@ -124,11 +127,12 @@ del valid_mnenomic_lenght_option, mnenomic_lenght_option
 print('Generating (at least) ' + str(bits_objective) + ' random bits from your Geiger counter data:')
 
 random_bits = ''
+max_volume = None                           
 while len(random_bits) < bits_objective:    # This generates (from the Geiger counter data) the random bits necesary for the mnenomic
     record_name = 'data'
     record_data(60,record_name)
 
-    random_bits = random_bits + get_random_bits(get_ticks("data.wav"))
+    random_bits = random_bits + get_random_bits(get_ticks(max_volume,"data.wav"))
     print(datetime.now().strftime("%H:%M:%S") + ' - ' + str(len(random_bits)) + ' random bits generated...')
     os.remove(record_name + '.wav')
 
