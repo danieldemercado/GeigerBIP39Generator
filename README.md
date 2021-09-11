@@ -7,7 +7,7 @@ A python 3 script for generating BIP39 mnemonic codes with random data coming fr
 3. [How to use it](#how-to-use-it)
 
 ## Disclaimer <a name="disclaimer" />
-I am not responsible for any coins losts due to the misuse of this script, nor due to it's use on a compromised computer. The script should be run on a computer that is permanently disconnected from the internet. 
+I am not responsible for any coins lost due to the misuse of this script, nor due to it's use on a compromised computer. The script should be run on a computer that is permanently disconnected from the internet. 
 
 ## Requirements <a name="requirements" />
 * This script needs `Python3`. I'm running version `3.8.10`, but other versions will likely work.
