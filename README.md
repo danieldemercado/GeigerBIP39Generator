@@ -2,8 +2,12 @@
 A python 3 script for generating BIP39 mnemonic codes with random data coming from a Geiger counter
 
 ## Index
-1. [Requirements](#requirements)
-2. [How to use it](#how-to-use-it)
+1. [Disclaimer](#disclaimer)
+2. [Requirements](#requirements)
+3. [How to use it](#how-to-use-it)
+
+## Disclaimer <a name="disclaimer" />
+I am not responsible for any coins losts due to the misuse of this script, nor due to it's use on a compromised computer. The script should be run on a computer that is permanently disconnected from the internet. 
 
 ## Requirements <a name="requirements" />
 * This script needs `Python3`. I'm running version `3.8.10`, but other versions will likely work.
@@ -69,3 +73,4 @@ A python 3 script for generating BIP39 mnemonic codes with random data coming fr
 
 5. The script will ask you to choose a mnemonic code words length. Choose the one you like.
 
+6. Wait untill the generation process finishes, this might take up to 20 minutes if you are only using background radiation. When this is done, the BIP39 words should be printed to the terminal.
